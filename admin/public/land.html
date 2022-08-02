@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>注册</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        background: url(./img/R-C.jfif) no-repeat 0px 0px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      #loginDiv {
+        width: 37%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 650px;
+        background-color: rgba(75, 81, 95, 0.3);
+        box-shadow: 7px 7px 17px rgba(52, 56, 66, 0.5);
+        border-radius: 5px;
+      }
+
+      #name_trip {
+        margin-left: 50px;
+        color: red;
+      }
+
+      p,
+      .sexDiv {
+        margin-top: 10px;
+        margin-left: 20px;
+        color: azure;
+      }
+
+      .sexDiv > input,
+      .hobby > input {
+        width: 30px;
+        height: 17px;
+      }
+
+      input,
+      select {
+        margin-left: 15px;
+        border-radius: 5px;
+        border-style: hidden;
+        height: 30px;
+        width: 140px;
+        background-color: rgba(216, 191, 216, 0.5);
+        outline: none;
+        color: #f0edf3;
+        padding-left: 10px;
+      }
+
+      .button {
+        border-color: cornsilk;
+        background-color: rgba(100, 149, 237, 0.7);
+        color: aliceblue;
+        border-style: hidden;
+        border-radius: 5px;
+        width: 100px;
+        height: 31px;
+        font-size: 16px;
+      }
+
+      .introduce {
+        margin-left: 110px;
+      }
+
+      .introduce > textarea {
+        background-color: rgba(216, 191, 216, 0.5);
+        border-style: hidden;
+        outline: none;
+        border-radius: 5px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        color: #f0edf3;
+      }
+
+      b {
+        margin-left: 50px;
+        color: #ffeb3b;
+        font-size: 10px;
+        font-weight: initial;
+      }
+      #zc-class {
+        font-size: 18px;
+        color: rgb(99, 170, 220);
+      }
+      .jz {
+        width: 98%;
+        height: 60px;
+        margin: 30px auto;
+      }
+      .jz-div {
+        text-align: right;
+      }
+      .tips {
+        margin-top: 10px;
+        width: 80%;
+        background-color: pink;
+        opacity: 0.3;
+        color: red;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+      }
+    </style>
+    <script src="./js/ajax封装.js"></script>
+  </head>
+
+  <body>
+    <div id="loginDiv">
+      <form action="" class="form-container">
+        <!-- 错误信息   -->
+        <p class="tips"></p>
+        <h1>注册</h1>
+
+        <p>
+          用户姓名:<input
+            id="userNname"
+            type="text"
+            name="adminName"
+            autofocus
+            required
+          /><label id="name_trip"></label>
+        </p>
+
+        <p>
+          用户密码:<input
+            id="password"
+            type="password"
+            name="pwd"
+            required
+          /><label id="password_trip"></label>
+        </p>
+
+        <p>
+          确认密码:<input id="surePassword" type="password" required /><label
+            id="surePassword_trip"
+          ></label>
+        </p>
+
+        <p>
+          电子邮件:
+          <input id="email" type="email" name="email" required />
+          <label id="emil_trip"></label>
+        </p>
+
+        <p style="text-align: center">
+          <input
+            type="submit"
+            class="button"
+            onblur="checkForm()"
+            value="提交"
+          />
+          <input type="reset" class="button" value="重置" />
+        </p>
+
+        <div class="jz">
+          <div class="jz-div jz-div01"></div>
+          <div class="jz-div jz-div02">
+            <a
+              id="zc-class"
+              href="javascript:;"
+              onclick="location='./login.html'"
+              >返回登陆></a
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script src="./js/ajax封装.js"></script>
+  <script type="text/javascript">
+    function trip(obj, trip) {
+      document.getElementById(obj).innerHTML = "<b>" + trip + "</b>";
+    }
+
+    function checkForm() {
+      //获取用户名输入项
+      var userNname = document.getElementById("userNname");
+      var uName = userNname.value;
+      if (uName.length < 1 || uName.length > 10) {
+        trip("name_trip", "账号长度为1-10位!!");
+        return false;
+      } else {
+        trip("name_trip", "OK!!");
+      }
+
+      //密码长度大于6 和确认必须一致
+      var password = document.getElementById("password");
+      var userPass = password.value;
+      if (userPass.length < 6) {
+        trip("password_trip", "密码要>6位!!");
+        return false;
+      } else {
+        trip("password_trip", "OK!!");
+      }
+
+      //获取确认密码框的值 var
+      var surePassword = document.getElementById("surePassword");
+      var surePass = surePassword.value;
+      if (userPass != surePass) {
+        trip("surePassword_trip", "两次密码不一致!!");
+        return false;
+      }
+
+      //校验邮箱:/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+      var inputEmail = document.getElementById("email");
+      var uEmail = inputEmail.value;
+      if (
+        !/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/.test(uEmail)
+      ) {
+        trip("emil_trip", "邮箱不合法!!");
+        return false;
+      } else {
+        trip("emil_trip", "OK!!");
+      }
+    }
+
+    //---
+    var form1 = document.querySelector(".form-container");
+    form1.addEventListener("submit", function (e) {
+      //阻止默认行为
+      e.preventDefault();
+      var adminName = document.querySelector("[name=adminName]").value;
+      var pwd = document.querySelector("[name=pwd]").value;
+      var email = document.querySelector("[name=email]").value;
+      var tips = document.querySelector(".tips");
+
+      var data = {
+        adminName: adminName,
+        pwd: pwd,
+        email: email,
+      };
+
+      ajax({
+        type: "post",
+        url: "./admin/addland",
+        data: data,
+        success: function (result) {
+          if (result.status == 1) {
+            tips.innerHTML = "!" + result.msg;
+          } else {
+            alert(result.msg);
+            location = "./login.html";
+          }
+        },
+      });
+    });
+  </script>
+</html>

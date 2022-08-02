@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>登陆</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        margin-left: 40%;
+        height: 100%;
+        width: 60%;
+        overflow: hidden;
+        margin: 0 auto;
+        padding: 0;
+        background: url(./img/2020062493996441.jpg) no-repeat 200px 0px;
+        background-repeat: no-repeat;
+        background-size: 60% 100%;
+        -moz-background-size: 100% 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      #loginDiv {
+        width: 37%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        background-color: rgba(75, 81, 95, 0.3);
+        box-shadow: 7px 7px 17px rgba(52, 56, 66, 0.5);
+        border-radius: 5px;
+      }
+
+      #name_trip {
+        margin-left: 50px;
+        color: red;
+      }
+
+      p {
+        margin-top: 30px;
+        margin-left: 20px;
+        color: azure;
+      }
+
+      input {
+        margin-left: 15px;
+        border-radius: 5px;
+        border-style: hidden;
+        height: 30px;
+        width: 140px;
+        background-color: rgba(216, 191, 216, 0.5);
+        outline: none;
+        color: #f0edf3;
+        padding-left: 10px;
+      }
+
+      .button {
+        border-color: cornsilk;
+        background-color: rgba(100, 149, 237, 0.7);
+        color: aliceblue;
+        border-style: hidden;
+        border-radius: 5px;
+        width: 100px;
+        height: 31px;
+        font-size: 16px;
+      }
+      /* .jz-div {
+        width: 210px;
+        height: 20px;
+      } */
+      .jz-div01 {
+        color: rgba(99, 134, 240, 0.876);
+      }
+      .jz-div01 input {
+        vertical-align: middle;
+        color: #69beeb;
+        width: 15px;
+        height: 15px;
+      }
+      .jz-div02 a {
+        font-size: 12px;
+        color: #69beeb;
+      }
+      .jz-div02 a:hover {
+        text-decoration: underline;
+      }
+      .jz {
+        display: flex;
+        justify-content: space-between;
+        z-index: 5;
+      }
+      .tips {
+        margin-top: 10px;
+        width: 100%;
+        background-color: pink;
+        opacity: 0.3;
+        color: red;
+        font-size: 24px;
+        font-weight: 600;
+      }
+    </style>
+    <script src="./js/ajax封装.js"></script>
+  </head>
+
+  <body>
+    <div id="loginDiv">
+      <form action="" id="form">
+        <h1 style="text-align: center; color: aliceblue">登陆</h1>
+        <p>
+          用户名:<input id="userNname" type="text" name="username" /><label
+            id="name_trip"
+          ></label>
+        </p>
+
+        <p>
+          密码 : <input id="password" type="password" name="pwd" /><label
+            id="password_trip"
+          ></label>
+        </p>
+
+        <div style="text-align: center; margin-top: 30px">
+          <input type="submit" class="btn button" value="登陆" />
+          <input type="reset" class="button" value="重置" />
+        </div>
+        <div class="jz">
+          <div class="jz-div jz-div01">
+            <input type="checkbox" name="记住密码" id="" />记住密码
+          </div>
+          <div class="jz-div jz-div02">
+            <a href="javascript:;" onclick="location='./land.html'"
+              >没有账户 立即注册？</a
+            >
+          </div>
+        </div>
+        <div class="tips"></div>
+      </form>
+    </div>
+    <script>
+      window.onload = function () {
+        var btn = document.querySelector(".btn");
+        var username = document.querySelector("[name=username]");
+        var pwd = document.querySelector("[name=pwd]");
+        btn.onclick = function (e) {
+          e.preventDefault();
+          var data = {
+            username: username.value,
+            pwd: pwd.value,
+          };
+          ajax({
+            type: "post",
+            url: "./admin/login",
+            data: data,
+            success: function (result) {
+              if (result.status == 0) {
+                console.log(result.status);
+                location.href = "./user.html";
+              } else {
+                alert("登录失败！");
+              }
+            },
+          });
+        };
+      };
+    </script>
+  </body>
+</html>
